@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!-- Demo de Aplázame modificadada para mostrar cómo integrar MarketPay -->
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>DEMO - Aplazame</title>
+    <!--<base href="/">-->
+    <base href=".">
+
+    <meta name="description"
+          content="¿Quieres ver cómo funcionaría Aplazame en tu tienda? Te enseñamos en esta demo el mejor proceso de concesión de crédito online del mundo.">
+
+    <!-- <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> -->
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta name="theme-color" content="#688298">
+
+    <link rel="stylesheet" href="./demo_files/demo.css">
+
+    <link rel="icon" href="./demo_files/favicon.ico">
+
+</head>
+<body data-branch="release">
+<!-- <iframe id="demo-iframe" src="https://www.chanel.com/es_ES/"></iframe> -->
+<header class="header">
+    <div class="container-md">
+
+        <a class="logo-link" href="https://demo.aplazame.com/">
+            <img src="./demo_files/marketpay_logo_b.png" alt="aplazame logo">
+        </a> &nbsp;&nbsp;
+        <a class="logo-link" href="https://demo.aplazame.com/">
+            <img src="./demo_files/logotipo-white.svg" alt="aplazame logo">
+        </a>
+    </div>
+</header>
+
+<div class="sections container-md">
+
+
+    <section class="section-box">
+
+        <div class="section-title">
+            <h3>Artículo</h3>
+        </div>
+
+        <article class="row article-sample">
+            <div class="col-sm-offset-3 col-sm-6 col-md-offset-0 img-wrapper">
+                <img src="./demo_files/package-1052370_1920.jpg" alt="N°5 EAU PREMIERE SPRAY">
+            </div>
+            <form class="col-md-6 details">
+                <div class="label">ARTÍCULO DE REGALO</div>
+                <p class="description">
+
+                <ul>
+                    <li>
+                        <strong>PASO 1:</strong> Incluir el javascript de aplázame en la página y configuar el botón.
+                        <br/>
+                        <br/>
+                    </li>
+                    <li>
+                        <strong>PASO 2:</strong> Lamar a Marketpay desde el servidor en el momento de generar la página,
+                        proporcionando la información del pedido. Esta llamada generará una cadena JSON con la
+                        información que es necesaria para iniciar el checkout. También se podría postponer e implementar
+                        como llamada ajax.
+                        <br/>
+                        <br/>
+                    </li>
+                    <li>
+                        <strong>PASO 3:</strong> Inicar el pago en aplázame. El proceso arranca en el navegador mediante
+                        javascript.
+                        <br/>
+                        <br/>
+                    </li>
+                </ul>
+
+                </p>
+
+                <div class="price">
+                    <div class="price-wrapper"></div>
+                    <div class="price" itemprop="price" content="3000">30.00€</div>
+                </div>
+                <br>
+            </form>
+        </article>
+
+    </section>
+
+    <!-- <div class="pay-with-aplazame"> -->
+    <div class="row"></div>
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+
+        <button class="btn btn-block pay-with-aplazame" onclick="do_checkout()">
+
+            <span>Pagar con&nbsp;</span><!--
+            --><img src="./demo_files/logotipo-white.svg">
+        </button>
+
+    </div>
+
+</div>
+
+<script type="text/javascript" src="https://aplazame.com/static/aplazame.js" data-aplazame="28bebdd33b0de7ec16d7e5910378b56954e7d538" data-sandbox="true" data-callback="apzReady">
+</script>
+
+<script>
+    window.apzReady = function () {
+        console.log('Aplazame está preparado', arguments);
+    };
+</script>
+
+<!-- alt version using url params:
+  <script type="text/javascript" src="dist/aplazame.js?build=1486691931859&sandbox=true&publicKey=12093289b594f50d3971e4719eedd5c314ceb6ba&callback=apzReady"></script>
+-->
+<script type="text/javascript">
+
+    function do_checkout() {
+
+        /*
+         * PASO 1: Lamar a Marketpay proporcionando la información del pedido. Esta llamada generará una cadena JSON con la información que es necesaria para iniciar el checkout con aplázame
+         *
+         * 1. Llamar a marketpay, desde el servidor, al generar la página de checkout para inicializar el pago e incluir la respuesta en un campo oculto o como javascript en la página
+         * 2. Implementar una llamada AJAX al servidor de la tienda, y que inicie el intento de pago en Marketpay. Esta opción es conveniente si la página de checkout permite cambiar cantidades dinámicamente.
+         *
+         */
+
+        var checkout_data_from_marketpay = '{"toc":true,"merchant":{"confirmation_url":"https://mktsnap.eu.ngrok.io/v2.01/PayInsAplazame/webhook/pay/1","cancel_url":"/cancel.aspx","success_url":"/success.aspx","checkout_url":"/checkout.aspx"},"order":{"id":"001399460914","currency":"EUR","tax_rate":2100.0,"total_amount":3000,"articles":[{"id":"ART111","name":"Ziritione","url":"http://google.com/Article111","image_url":"http://google.com/img.png","quantity":1,"price":10000,"description":"Some nice article","tax_rate":2100,"discount":0,"discount_rate":0}],"discount":0,"discount_rate":0,"cart_discount":1000,"cart_discount_rate":100},"customer":{"id":2,"email":"something@something.es","type":"e","gender":0,"first_name":"FirstName","last_name":"LastName","birthday":"1998-03-21T11:56:31Z","date_joined":"2017-03-21T11:56:31.2535788Z","address":{"first_name":"FirstName","last_name":"LastName","street":"AddressLine1","city":"Barcelona","state":"Barcelona","country":"ES","postcode":"08025","address_addition":"AddressLine2"}},"shipping":{"first_name":"FirstName","last_name":"LastName","street":"AddressLine1 AddressLine2","city":"Barcelona","state":"Barcelona","country":"ES","postcode":"08025","name":"Shipping 01","price":0},"meta":"Some data"}';
+
+        /*
+         * PASO 2: Inicar el pago en aplázame. El pago en aplázame se inicia desde el navegador mediante javascript
+         *
+         */
+
+        var data = JSON.parse(checkout_data_from_marketpay);
+        aplazame.checkout(data);
+    }
+</script>
+</body>
+</html>
